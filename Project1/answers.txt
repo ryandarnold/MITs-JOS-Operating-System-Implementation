@@ -4,3 +4,5 @@ Submitted by:  Ryan Arnold, Gabby Donohue
 Question 1: "Try to guess what its ROM BIOS is doing by looking at the first few instructions"
 
 Answer: 
+The instructions look like they're in BIOS mode trying to prepare the system to load in a bootloader from BIOS (I think). The instructions set up the stack segment and extended stack pointer register, which are used to run a program. Also, doing "make qemu-gdb" tells QEMU to stop just before the processor executes the first instruction, which tells me the first instruction is probably BIOS firmware trying to immediately load in the bootloader. 
+

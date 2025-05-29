@@ -1,1 +1,6 @@
-testing hehe
+CSCI-352 Project 1
+Submitted by:  Ryan Arnold, Gabby Donohue
+
+Question 1: "Try to guess what its ROM BIOS is doing by looking at the first few instructions"
+
+Answer: 

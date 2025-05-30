@@ -3,6 +3,17 @@ Submitted by:  Ryan Arnold, Gabby Donohue
 
 Question 1: "Try to guess what its ROM BIOS is doing by looking at the first few instructions"
 
-Answer: 
+Answer for Question 1: 
 The instructions look like they're in BIOS mode trying to prepare the system to load in a bootloader from BIOS (I think). The instructions set up the stack segment and extended stack pointer register, which are used to run a program. Also, doing "make qemu-gdb" tells QEMU to stop just before the processor executes the first instruction, which tells me the first instruction is probably BIOS firmware trying to immediately load in the bootloader. 
+
+
+Question 2:
+Part A) "At what point does the processor first start executing 32-bit code? What exactly causes the switch from 16- to 32-bit mode?"
+Part B) "What is the last instruction of the boot loader executed, and what is the first instruction of the kernel it just loaded?"
+Part C) "Where is the first instruction of the kernel?"
+Part D) "How does the boot loader decide how many sectors it must read in order to fetch the entire kernel from disk? Where does it find this information?"
+
+Answers for Question 2: 
+A) The processor first starts executing 32-bit code after the "ljmp $PROT_MODE_CSEG, $protcseg" code into the .code32 section. The "long jump" instruction causes it to officially switch. To first get into protected mode, you have to set bit 0 of the CR0 register before performing the long jump instruction.
+B) 
 

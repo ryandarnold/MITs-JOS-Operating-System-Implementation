@@ -15,5 +15,7 @@ Part D) "How does the boot loader decide how many sectors it must read in order 
 
 Answers for Question 2: 
 A) The processor first starts executing 32-bit code after the "ljmp $PROT_MODE_CSEG, $protcseg" code into the .code32 section. The "long jump" instruction causes it to officially switch. To first get into protected mode, you have to set bit 0 of the CR0 register before performing the long jump instruction.
-B) The last instruction the boot loader executes is "((void (*)(void)) (ELFHDR->e_entry))();" because the e_entry parameter tells the bootmain() where to find the kernel code. The first instruction of the kernel it just loaded is...
+B) The last instruction the boot loader executes is "((void (*)(void)) (ELFHDR->e_entry))();" because the e_entry parameter tells the bootmain() where to find the kernel code. The first instruction of the kernel it just loaded is is "entry.S" file, which is "_start = RELOC(entry)" and specifies the ELF starting point for loading in the kernel code. 
+C) The first instruction of the kernel is located in entry.S
+D) 
 

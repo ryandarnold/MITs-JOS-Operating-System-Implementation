@@ -19,3 +19,8 @@ B) The last instruction the boot loader executes is "((void (*)(void)) (ELFHDR->
 C) The first instruction of the kernel is located in entry.S
 D) The number of sectors read depends on number of program headers in the ELFHDR, and the size each ph->p_memsz bytes to read in each program header. It finds this information from each program header located in the Executable and Linkable Format Header (ELFHDR). 
 
+
+Question 3: "Trace through the first few instructions of the boot loader again and identify the first instruction that would break or otherwise do the wrong thing if you were to get the boot loader's link address wrong. Then change the link address in boot/Makefrag to something wrong. Describe what you changed and what the effect was; was the effect what you expected, or something different?"
+
+Answers for Question 3:
+1) (*I might be wrong about this rip*) I think the first address that would break would be in boot.S under the "ljmp $PROT_MODE_CSEG, $protcseg" instruction, because the address of "protcseg" symbol differs depending on the link address, which means the jump would jump to a wrong address. 

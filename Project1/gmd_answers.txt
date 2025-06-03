@@ -81,5 +81,12 @@ the stack using the directive “.space KSTKSIZE”, where KSTKSIZE defines the 
 bootstack top is placed at the end of the reserved space to represent top of the stack since the stack grows from
 high to low memory.  Bootstacktop is located at the virtual address 0xf0110000.
 
+Question 8: How many 32-bit words does each recursive nestin level of test_backtrace push on the stack, and what are those words?
+
+Answer for Question 8:
+Each recursive level of test_backtrace() pushes 6 words onto the stack. The EBP and EBX of the previous call, 3
+words of space to the new function stack, and the argument used in the next recursive call. 2 words are 
+temporarily pushed to call cprinf, but it popprf off right after use. 
+
 
 

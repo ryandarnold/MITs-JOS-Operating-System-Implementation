@@ -29,16 +29,28 @@ on until all sectors are read.
 
 Question 3: "Trace through the first few instructions of the boot loader again and identify the first instruction that would break or otherwise do the wrong thing if you were to get the boot loader's link address wrong. Then change the link address in boot/Makefrag to something wrong. Describe what you changed and what the effect was; was the effect what you expected, or something different?"
 
-Answers for Question 3:
+Answer for Question 3:
 In boot/Makefrag, line 28 was changed from “...-e start -Ttext 0x7c00 -o… “ to “-Ttext 0x7”. The boot loader breaks at address 0x07c2e, instruction 
 ljmp $PROT_MODE_CSEG, $protcseg. This makes sense since protcseg is a label whose address is computed relative to the base address. Changing the 
 base address changes the computed address of the label, causing the jump to go to the wrong offset.  
 
 Question 4: "Examine the 8 words of memory at 0x00100000 before the boot loader and after the boot loader."
 
-Answers for Question 4:
+Answer for Question 4:
 0x100000:	0x1badb002	0x00000000	0xe4524ffe	0x7205c766
 0x100010:	0x34000004	0x0000b812	0x220f0011	0xc0200fd8
-Before the boot loader is run, the 8 words of memory at 0x00100000 are cleared. The boot loader’s main responsibility is to load the kernel into
-memory, which starts at physical address 0x10000. After the boot loader finishes running, that section of memory is now occupied by the kernel 
-image. When the boot loader enters the kernel, the memory contains the kernel’s first instructions.  
+Before the boot loader is run, the 8 words of memory at 0x00100000 are cleared. The boot loader’s main 
+responsibility is to load the kernel into
+memory, which starts at physical address 0x10000. After the boot loader finishes running, that section of memory
+is now occupied by the kernel 
+image. When the boot loader enters the kernel, the memory contains the kernel’s first instructions. 
+
+Question 5: "Examine the memory at 0x00100000 and 0xf0100000 before and after movl $eax, %cr0 in the kernel. What 
+would be the first instruction that would fail to work if this instruction was commented out?"
+
+Answer for Question 5:
+“movl %eax, %cr0” enables paging, which allows the CPU to begin translating virtual addresses to physical memory.
+The first instruction that would fail if the mapping weren’t in place is “movl $*bootstacktop), %esp”.  This 
+instruction sets up the stack pointer in virtual memory. If paging wasn’t enabled, the values in the stack would 
+not be correctly pushed to the correct location in physical memory. 
+

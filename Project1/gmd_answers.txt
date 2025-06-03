@@ -1,0 +1,44 @@
+CSCI-352 Project 1
+Submitted by:  Ryan Arnold, Gabby Donohue
+
+Question 1: "Try to guess what its ROM BIOS is doing by looking at the first few instructions"
+
+Answer for Question 1: 
+When the system powers on, the CPU begins execution at a fixed address in the ROM BIOS. These instructions are part of the BIOS firmware responsible
+for initializing the hardware and loading the boot loader.  The BIOS appears to do an error check, clearing the stack segment register and the stack 
+pointer, then loading the physical address of the boot loader into the stack pointer, to execute later. 
+
+Question 2:
+Part A) "At what point does the processor first start executing 32-bit code? What exactly causes the switch from 16- to 32-bit mode?"
+Part B) "What is the last instruction of the boot loader executed, and what is the first instruction of the kernel it just loaded?"
+Part C) "Where is the first instruction of the kernel?"
+Part D) "How does the boot loader decide how many sectors it must read in order to fetch the entire kernel from disk? Where does it find this information?"
+
+Answers for Question 2: 
+A) The processor first starts executing 32-bit code after the label protcseg. Before switching to protected mode, interrupts are disabled, the global
+descriptor table is loaded, and cr0 is set to protection enabled. Ljmp$PROT_MODE_CSEG, $protcseg switches the processor to 32-bit mode starting at the
+label protcseg.
+
+B) The last instruction of the boot loader executed is “((void (*)(void)) (ELFHDR->e_entry))();” in boot/main.c. The first instructio of the kernel is 
+_start, which is the ELF entry point. 
+
+C) The instruction is located in entry.S at physical address 0x10018.
+
+D) The boot loader determines how many sectors to read from ELFHDR. ELFHDR has a field, e_phnum, which stores the program headers. E_phnum is iterated
+on until all sectors are read. 
+
+Question 3: "Trace through the first few instructions of the boot loader again and identify the first instruction that would break or otherwise do the wrong thing if you were to get the boot loader's link address wrong. Then change the link address in boot/Makefrag to something wrong. Describe what you changed and what the effect was; was the effect what you expected, or something different?"
+
+Answers for Question 3:
+In boot/Makefrag, line 28 was changed from “...-e start -Ttext 0x7c00 -o… “ to “-Ttext 0x7”. The boot loader breaks at address 0x07c2e, instruction 
+ljmp $PROT_MODE_CSEG, $protcseg. This makes sense since protcseg is a label whose address is computed relative to the base address. Changing the 
+base address changes the computed address of the label, causing the jump to go to the wrong offset.  
+
+Question 4: "Examine the 8 words of memory at 0x00100000 before the boot loader and after the boot loader."
+
+Answers for Question 4:
+0x100000:	0x1badb002	0x00000000	0xe4524ffe	0x7205c766
+0x100010:	0x34000004	0x0000b812	0x220f0011	0xc0200fd8
+Before the boot loader is run, the 8 words of memory at 0x00100000 are cleared. The boot loader’s main responsibility is to load the kernel into
+memory, which starts at physical address 0x10000. After the boot loader finishes running, that section of memory is now occupied by the kernel 
+image. When the boot loader enters the kernel, the memory contains the kernel’s first instructions.  

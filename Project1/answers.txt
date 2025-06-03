@@ -33,3 +33,9 @@ Question 4: "Examine the 8 words of memory at 0x00100000 at the point the BIOS e
 
 Answer for question 4: 
 1) Right when the BIOS enters the bootloaders at address 0x7c00, the  memory at 0x100000 is all zeros and seems to be cleared. Right when we enter the Kernel code, the 8 memory addresses at 0x100000 are filled with kernel instructions. This makes sense, because the bootloader loaded these kernel instructions at location 0x100000, but these locations were empty before they were loaded. 
+
+
+Question 5: "What is the first instruction after the new mapping is established that would fail to work properly if the mapping weren't in place? Comment out the movl %eax, %cr0 in kern/entry.S, trace into it, and see if you were right."
+
+Answer for question 5: 
+1) The first instruction that would fail would be the "mov $relocated, %eax" and the "jmp *%eax" instructions, because once virtual memory/paging is enabled, then the CPU interprets the assembly labels as virtual memory addresses. After attempting commenting out the "mov $relocated, %eax" instruction, QEMU crashed right after the "jmp *%eax" instruction. 

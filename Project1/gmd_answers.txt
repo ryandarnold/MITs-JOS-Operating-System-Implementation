@@ -19,7 +19,7 @@ A) The processor first starts executing 32-bit code after the label protcseg. Be
 descriptor table is loaded, and cr0 is set to protection enabled. Ljmp$PROT_MODE_CSEG, $protcseg switches the processor to 32-bit mode starting at the
 label protcseg.
 
-B) The last instruction of the boot loader executed is “((void (*)(void)) (ELFHDR->e_entry))();” in boot/main.c. The first instructio of the kernel is 
+B) The last instruction of the boot loader executed is “((void (*)(void)) (ELFHDR->e_entry))();” in boot/main.c. The first instruction of the kernel is 
 _start, which is the ELF entry point. 
 
 C) The instruction is located in entry.S at physical address 0x10018.

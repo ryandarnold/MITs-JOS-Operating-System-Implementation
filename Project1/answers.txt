@@ -39,3 +39,17 @@ Question 5: "What is the first instruction after the new mapping is established 
 
 Answer for question 5: 
 1) The first instruction that would fail would be the "mov $relocated, %eax" and the "jmp *%eax" instructions, because once virtual memory/paging is enabled, then the CPU interprets the assembly labels as virtual memory addresses. After attempting commenting out the "mov $relocated, %eax" instruction, QEMU crashed right after the "jmp *%eax" instruction. 
+
+
+Question 6:
+A) "Explain the interface between printf.c and console.c. Specifically, what function does console.c export? How is this function used by printf.c?"
+B) "In the following code, what is going to be printed after 'y='? (Note: the answer is not a specific value.) Why does this happen?
+cprintf("x=%d y=%d", 3);"
+C) "Let's say that GCC changed its calling convention so that it pushed arguments on the stack in declaration order, so that the last argument is pushed last. How would you have to change cprintf() or its interface so that it would still be possible to pass it a variable number of arguments?"
+
+Answers for Question 6: 
+1) console.c seems to be directly interacting, via assembly code, with the hardware to output characters to the COM serial ports. console.c exports the "cputchar()" function to the "putch()" function in the print.c file. The print.c file uses this function to output a single character at a time to the console. 
+2) the next argument in the variable-arguments variable 'ap' will be printed as a base 10  signed integer value. This happens because getint(&ap, lflag) returns the next value in the variable arguments list
+3) 
+
+

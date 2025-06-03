@@ -73,4 +73,13 @@ two were expected.
 C) cprintf() can be modified to index its arguments by using the address of the first argument and calculating 
 the offset of following augmented based on its index.  
 
+Question 7: "Determine where the kernel initalizes its stack, where in memory it is located, how the kernel reserves space for its stack, and the end the reserved area the stakc pointer is initialized to point to."
+
+Answer for Question 7:
+The kernel initializes its stack in the .data section of entry.S at the label bootstack. It reserves space for 
+the stack using the directive “.space KSTKSIZE”, where KSTKSIZE defines the size of the kernel stack. The label 
+bootstack top is placed at the end of the reserved space to represent top of the stack since the stack grows from
+high to low memory.  Bootstacktop is located at the virtual address 0xf0110000.
+
+
 

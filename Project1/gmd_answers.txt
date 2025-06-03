@@ -54,3 +54,23 @@ The first instruction that would fail if the mapping weren’t in place is “mo
 instruction sets up the stack pointer in virtual memory. If paging wasn’t enabled, the values in the stack would 
 not be correctly pushed to the correct location in physical memory. 
 
+Question 6:
+A) "Explain the interface between printf.c and console.c."
+
+B) "What is printed after "y=" when cprintf("x=%d y=%d", 3); is executed?"
+
+C) "How to change cprintf() to pass a varible number of arguments in declaration order?"
+
+Answers for Question 6:
+
+A) Console.c directly interacts with I/O devices. Printf.c contains functions that format the given input strings
+and processes the strings character by character. Once the string is formatted, each character is passed to the 
+console using the function cputchar(), which is defined in conole.c. 
+
+B) The random value stored after *ap will be outputted. This is because there is only one argument passed when
+two were expected. 
+
+C) cprintf() can be modified to index its arguments by using the address of the first argument and calculating 
+the offset of following augmented based on its index.  
+
+

@@ -56,6 +56,6 @@ Answers for Question 6:
 Question 7: "Determine where the kernel initializes its stack, and exactly where in memory its stack is located. How does the kernel reserve space for its stack? And at which end of this reserved area is the stack pointer initialized to point to?"
 
 Answer for Question 7: 
-1) 
+1) The kernel initializes its stack in entry.S, under the .data section starting at the bootstack label, and ending with the bootstacktop label. 0xf0110000 is the location where the top of the stack is located. The kernel reserves space by setting the section as a .data label. The "top" of the stack is at the lowest memory address, because the stack seems to point downward
 
 

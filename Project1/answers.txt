@@ -50,6 +50,12 @@ C) "Let's say that GCC changed its calling convention so that it pushed argument
 Answers for Question 6: 
 1) console.c seems to be directly interacting, via assembly code, with the hardware to output characters to the COM serial ports. console.c exports the "cputchar()" function to the "putch()" function in the print.c file. The print.c file uses this function to output a single character at a time to the console. 
 2) the next argument in the variable-arguments variable 'ap' will be printed as a base 10  signed integer value. This happens because getint(&ap, lflag) returns the next value in the variable arguments list
-3) 
+3) I think you would have to push all the values of the stack into another stack, then pop one argument at a time to get them back in the left-to-right order
+
+
+Question 7: "Determine where the kernel initializes its stack, and exactly where in memory its stack is located. How does the kernel reserve space for its stack? And at which end of this reserved area is the stack pointer initialized to point to?"
+
+Answer for Question 7: 
+1) 
 
 

@@ -89,4 +89,48 @@ Each recursive level of test_backtrace() pushes 5 words onto the stack. The EBP 
 passed into the next recursive level of test_backtrace, and the return address. 
 
 
+Exercise 2
+ 59 mon_backtrace(int argc, char **argv, struct Trapframe *tf)
+ 60 {
+ 61     uint32_t *ebp = (uint32_t *)read_ebp();
+ 62     while (ebp != 0) {
+ 63         uint32_t eip = ebp[1];
+ 64         uint32_t arg1 = ebp[2];
+ 65         uint32_t arg2 = ebp[3];
+ 66         uint32_t arg3 = ebp[4];
+ 67         uint32_t arg4 = ebp[5];
+ 68         uint32_t arg5 = ebp[6];
+ 69 
+ 70         cprintf("ebp %08x  eip %08x  args %08x %08x %08x %08x %08x\n",(uint32_t)ebp, eip, arg1, arg2, arg3, arg4, arg5);
+ 71 
+ 72         ebp = (uint32_t *)ebp[0]
+ 73     }
+ 74     cprintf("backtrace here\n");
+ 75     return 0;
+
+Output
+
+entering test_backtrace 5
+entering test_backtrace 4
+entering test_backtrace 3
+entering test_backtrace 2
+entering test_backtrace 1
+entering test_backtrace 0
+ebp f010ff18  eip f0100093  args 00000000 00000000 00000000 00000000 f0100931
+ebp f010ff38  eip f010006c  args 00000000 00000001 f010ff78 00000000 f0100931
+ebp f010ff58  eip f010006c  args 00000001 00000002 f010ff98 00000000 f0100931
+ebp f010ff78  eip f010006c  args 00000002 00000003 f010ffb8 00000000 f0100931
+ebp f010ff98  eip f010006c  args 00000003 00000004 00000000 00000000 00000000
+ebp f010ffb8  eip f010006c  args 00000004 00000005 00000000 00010094 00010094
+ebp f010ffd8  eip f01000dc  args 00000005 00001aac 00000640 00000000 00000000
+ebp f010fff8  eip f010003e  args 00111021 00000000 00000000 00000000 00000000
+backtrace here
+leaving test_backtrace 0
+leaving test_backtrace 1
+leaving test_backtrace 2
+leaving test_backtrace 3
+leaving test_backtrace 4
+leaving test_backtrace 5
+
+
 

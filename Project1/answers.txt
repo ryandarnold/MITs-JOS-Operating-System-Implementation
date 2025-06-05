@@ -62,6 +62,14 @@ Answer for Question 7:
 Question 8: "How many 32-bit words does each recursive nesting level of test_backtrace push on the stack, and what are those words?"
 
 Answer for Question 8: 
-1) Each recursive backtrace pushes seven 32-bit words: 
+1) Each recursive backtrace pushes seven 32-bit words. It pushes: 
+A) ebp (the current stack frame/base pointer)
+B) ebx (which this function must push before using it) 
+C) ebx again (which contains the current value of argument x)
+D) 0xf01018c0 (which is the pointer to the string "entering test_backtrace" argument for the cprintf() function)
+E) The return address after returning from cprintf()
+F) eax (which contains x-1 variable)
+G) ***NOTE*** I'm not sure if we should include 32 bit words pushed onto the stack after x > 0 is NOT true, since we are returning and printing
+"leaving test_backtrace"
 
 

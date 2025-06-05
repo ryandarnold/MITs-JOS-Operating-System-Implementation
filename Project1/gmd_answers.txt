@@ -73,7 +73,8 @@ two were expected.
 C) cprintf() can be modified to index its arguments by using the address of the first argument and calculating 
 the offset of following augmented based on its index.  
 
-Question 7: "Determine where the kernel initalizes its stack, where in memory it is located, how the kernel reserves space for its stack, and the end the reserved area the stakc pointer is initialized to point to."
+Question 7: "Determine where the kernel initalizes its stack, where in memory it is located, how the kernel reserves space for its stack, and the end the reserved area the 
+stack pointer is initialized to point to."
 
 Answer for Question 7:
 The kernel initializes its stack in the .data section of entry.S at the label bootstack. It reserves space for 
@@ -84,9 +85,8 @@ high to low memory.  Bootstacktop is located at the virtual address 0xf0110000.
 Question 8: How many 32-bit words does each recursive nestin level of test_backtrace push on the stack, and what are those words?
 
 Answer for Question 8:
-Each recursive level of test_backtrace() pushes 6 words onto the stack. The EBP and EBX of the previous call, 3
-words of space to the new function stack, and the argument used in the next recursive call. 2 words are 
-temporarily pushed to call cprinf, but it popprf off right after use. 
+Each recursive level of test_backtrace() pushes 5 words onto the stack. The EBP and EBX of the previous call, the parameter (x) passed into test_backtrace, the next argument (x-1) being
+passed into the next recursive level of test_backtrace, and the return address. 
 
 
 

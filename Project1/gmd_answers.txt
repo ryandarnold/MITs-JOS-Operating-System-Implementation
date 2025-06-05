@@ -27,7 +27,9 @@ C) The instruction is located in entry.S at physical address 0x10018.
 D) The boot loader determines how many sectors to read from ELFHDR. ELFHDR has a field, e_phnum, which stores the program headers. E_phnum is iterated
 on until all sectors are read. 
 
-Question 3: "Trace through the first few instructions of the boot loader again and identify the first instruction that would break or otherwise do the wrong thing if you were to get the boot loader's link address wrong. Then change the link address in boot/Makefrag to something wrong. Describe what you changed and what the effect was; was the effect what you expected, or something different?"
+Question 3: "Trace through the first few instructions of the boot loader again and identify the first instruction that would break or otherwise do the wrong thing if you were to get 
+the boot loader's link address wrong. Then change the link address in boot/Makefrag to something wrong. Describe what you changed and what the effect was; was the effect what you 
+expected, or something different?"
 
 Answer for Question 3:
 In boot/Makefrag, line 28 was changed from “...-e start -Ttext 0x7c00 -o… “ to “-Ttext 0x7”. The boot loader breaks at address 0x07c2e, instruction 
@@ -85,8 +87,10 @@ high to low memory.  Bootstacktop is located at the virtual address 0xf0110000.
 Question 8: How many 32-bit words does each recursive nestin level of test_backtrace push on the stack, and what are those words?
 
 Answer for Question 8:
-Each recursive level of test_backtrace() pushes 5 words onto the stack. The EBP and EBX of the previous call, the parameter (x) passed into test_backtrace, the next argument (x-1) being
-passed into the next recursive level of test_backtrace, and the return address. 
+The answer I think is 8 words but idk what they are?
+
+Each recursive level of test_backtrace() pushes 5 words onto the stack. The EBP and EBX of the previous call, the parameter (x) passed into test_backtrace, the next argument (x-1) 
+beingpassed into the next recursive level of test_backtrace, and the return address. 
 
 
 Exercise 2

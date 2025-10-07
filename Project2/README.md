@@ -1,6 +1,7 @@
 I wrote these functions in the kern/pmap.c file: 
 
 boot_alloc()
+
 mem_init() 
 page_init()
 page_alloc()
